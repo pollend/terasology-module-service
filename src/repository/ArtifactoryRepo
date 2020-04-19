@@ -1,0 +1,59 @@
+import {Container, Service} from "typedi";
+const fs = require('fs');
+import axios from 'axios';
+
+
+interface ArtifactPayload {
+
+
+}
+
+export enum RepoType {
+    RELEASE,
+    SNAPSHOT
+}
+export class ArtifactItem {
+    readonly repo: string
+    readonly group: string
+    readonly baseUri: string
+
+    get uri() {
+        // const config = Container.get(Config)
+        return this.repo + "/" + this.groupPath
+    }
+
+    get groupPath() {
+        return this.group.split('.').join('/')
+    }
+
+    constructor(uri: string, repoName: string, group: string, type: RepoType) {
+        this.repo = repoName
+        this.group = group
+        this.baseUri = uri
+    }
+}
+
+@Service()
+export default class ArtifactoryRepo {
+    _items: ArtifactItem[] = []
+
+    constructor() {
+
+    }
+
+    register(item: ArtifactItem) {
+        this._items = [...this._items, item]
+    }
+
+    async processArtifacts() {
+        for(const it of this._items) {
+            const result = await axios.get(it.baseUri + '/api/storage/' + it.uri)
+
+        }
+
+    }
+
+    async getModuleInfo() {
+
+    }
+}

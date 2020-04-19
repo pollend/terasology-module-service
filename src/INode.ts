@@ -1,3 +1,3 @@
 export interface INode {
-    opaqueId: string;
+    oid: string;
 }

@@ -1,1 +1,29 @@
+version: '2'
 
+services:
+  db:
+    image: postgres
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+      POSTGRES_USER: db
+    ports:
+      - 5432:5432
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USERNAME=db
+      - DATABASE_PASSWORD=password
+      - DATABASE=db
+      - DATABASE_PORT=5432
+    ports:
+      - 8443:8443
+    volumes:
+      - ./src:/meta-server/src
