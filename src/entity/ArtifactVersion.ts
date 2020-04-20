@@ -1,14 +1,12 @@
 import ArtifactRepo from "./ArtifactRepo";
 import {Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import TerasologyModuleVersion from "./TerasologyModuleVersion";
+import Artifact from "./Artifacts";
 
 @Entity()
 export default class ArtifactVersion {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column()
-    name: string
 
     @Column()
     major: number
@@ -19,8 +17,8 @@ export default class ArtifactVersion {
     @Column()
     patch: number
 
-    @ManyToOne(type => ArtifactRepo)
-    repo: ArtifactRepo
+    @ManyToOne(type => Artifact)
+    artifact: Artifact
 
     @Column()
     downloadUri: string

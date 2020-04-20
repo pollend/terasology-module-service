@@ -17,4 +17,8 @@ export default class ArtifactRepo {
     @Column()
     type: "SNAPSHOT" | "RELEASE"
 
+    get groupPath() {
+        return this.group.split('.').join('/')
+    }
+
 }
